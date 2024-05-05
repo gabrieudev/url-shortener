@@ -17,7 +17,7 @@ Essa é a minha resolução para o desafio de **Encurtador de URL**, uma API RES
 
 ## Introdução
 
-O desafio consiste em elaborar uma API REST capaz de receber uma URl, armazená-la num banco de dados com um prazo de validade e, caso ela receba uma chamada, redirecionar para a URL original.  
+O desafio consiste em elaborar uma API REST capaz de receber uma URL, armazená-la em um banco de dados com um prazo de validade e, caso ela receba uma chamada, redirecionar para a URL original.  
 
 ## Funcionalidades
 
