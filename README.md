@@ -1,66 +1,72 @@
-# Encurtador de URL
+# URL Shortener
 
 ![Java](https://img.shields.io/badge/Java-8%2B-orange) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-blue) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![Spring Boot](https://img.shields.io/badge/Type-Challenge-purple) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
 
-Essa é a minha resolução para o desafio de **Encurtador de URL**, uma API REST desenvolvida em Spring Boot. Acesse o [desafio](https://github.com/backend-br/desafios/blob/master/url-shortener/PROBLEM.md) para obter mais informações do problema.
+This is my solution for the **URL Shortener** challenge, a REST API developed with Spring Boot. 
 
-## Tabela de conteúdos
+Please select your preferred language:
 
-- [Introdução](#introdução)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias](#tecnologias)
-- [Iniciando](#iniciando)
-- [Configuração](#configuração)
-- [Endpoints](#endpoints)
-- [Contribuições](#contribuições)
-- [Contato](#contato)
+- [English](README.md)
+- [Português (Brasil)](README.pt-br.md)
 
-## Introdução
+Check the [challenge](https://github.com/backend-br/desafios/blob/master/url-shortener/PROBLEM.md) for more information about the problem.
 
-O desafio consiste em elaborar uma API REST capaz de receber uma URL, armazená-la em um banco de dados com um prazo de validade e, caso ela receba uma chamada, redirecionar para a URL original.  
+## Table of Contents
 
-## Funcionalidades
+- Introduction
+- Features
+- Technologies
+- Getting Started
+- Configuration
+- Endpoints
+- Contributions
+- Contact
 
-- Criar URL encurtada
-- Acessar URL original através da encurtada
+## Introduction
 
-## Tecnologias
+The challenge consists of creating a REST API capable of receiving a URL, storing it in a database with an expiration date, and redirecting to the original URL when accessed.
 
-- ![Java](https://img.shields.io/badge/Java-8%2B-orange): Linguagem de programação.
-- ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green): Framework usado para a construção de aplicações web.
-- ![MongoDB](https://img.shields.io/badge/MongoDB-Database-blue): Banco de dados NoSQL.
+## Features
 
-## Iniciando
+- Create shortened URLs
+- Access the original URL via the shortened URL
 
-Siga esses passos para executar o projeto na sua máquina:
+## Technologies
 
-1. Clone o repositório: `git clone https://github.com/gabrieudev/url-shortener.git`
-2. Navegue para o diretório do projeto: `cd <caminho>`
-3. Atualize as configurações de banco de dados no arquivo `application.properties`.
-4. Construa o projeto: `./mvnw clean install` (para Windows: `mvnw.cmd clean install`)
-5. Execute a aplicação: `./mvnw spring-boot:run` (para Windows: `mvnw.cmd spring-boot:run`)
+- ![Java](https://img.shields.io/badge/Java-8%2B-orange): Programming language.
+- ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green): Framework used for building web applications.
+- ![MongoDB](https://img.shields.io/badge/MongoDB-Database-gree): NoSQL database.
 
-## Configuração
+## Getting Started
 
-- Atualize o arquivo `application.properties` com as informações do seu banco de dados MongoDB.
-- Determine quanto tempo uma URL irá permanecer no banco de dados em `UrlService.java`, alterando o parâmetro de tipo LocalDateTime para o construtor da entidade `UrlModel` no método `save` (padrão é 1 hora).
+Follow these steps to run the project on your machine:
 
+1. Clone the repository: `git clone https://github.com/gabrieudev/url-shortener.git`
+2. Navigate to the project directory: `cd <path>`
+3. Update the database configurations in the `application.properties` file.
+4. Build the project: `./mvnw clean install` (for Windows: `mvnw.cmd clean install`)
+5. Run the application: `./mvnw spring-boot:run` (for Windows: `mvnw.cmd spring-boot:run`)
+
+## Configuration
+
+- Update the `application.properties` file with your MongoDB database information.
+- Set how long a URL will remain in the database in `UrlService.java` by changing the LocalDateTime parameter for the `UrlModel` entity constructor in the `save` method (default is 1 hour).
 
 ## Endpoints
 
-- `POST /shorten-url`: Encurta e salva uma URL no banco de dados.
-- `GET /{id}`: Ao acessar a URL encurtada, redireciona para a URL original.
+- `POST /shorten-url`: Shortens and saves a URL in the database.
+- `GET /{id}`: Redirects to the original URL when accessing the shortened URL.
 
-Acesse a documentação completa no endpoint `/swagger-ui.html`
+Access the complete documentation at the `/swagger-ui.html` endpoint.
 
-## Contribuições
+## Contributions
 
-Contribuições são muito bem vindas! Caso queira contribuir, faça um fork do repositório e crie um pull request.
+Contributions are very welcome! If you want to contribute, fork the repository and create a pull request.
 
-## Contato
+## Contact
 
-Caso tenha alguma sugestão ou dúvida, entre em contato comigo em [LinkedIn](https://www.linkedin.com/in/gabrieudev)
+If you have any suggestions or questions, please contact me on [LinkedIn](https://www.linkedin.com/in/gabrieudev).
 
 ---
 
-**Licença:** Esse projeto é licenciado sob os termos da [GNU General Public License (GPL)](LICENSE).
+**License:** This project is licensed under the terms of the [GNU General Public License (GPL)](LICENSE).
