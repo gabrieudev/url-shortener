@@ -1,4 +1,4 @@
-package com.project.urlshortener;
+package com.project.urlshortener.service;
 
 import com.project.urlshortener.exception.ObjectNotFoundException;
 import com.project.urlshortener.model.UrlModel;

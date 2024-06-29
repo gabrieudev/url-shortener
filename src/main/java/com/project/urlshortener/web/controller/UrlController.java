@@ -1,6 +1,6 @@
 package com.project.urlshortener.web.controller;
 
-import com.project.urlshortener.UrlService;
+import com.project.urlshortener.service.UrlService;
 import com.project.urlshortener.web.dto.ShortenUrlRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
