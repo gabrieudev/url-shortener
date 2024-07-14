@@ -50,4 +50,13 @@ public class RestExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(UrlAlreadyExistsException.class)
+    public ProblemDetail handleUrlAlreadyExistsException(UrlAlreadyExistsException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getLocalizedMessage());
+        problemDetail.setTitle("URL already exists");
+        problemDetail.setProperty("timestamp", Instant.now());
+        problemDetail.setProperty("stacktrace", e.getStackTrace());
+        return problemDetail;
+    }
+
 }

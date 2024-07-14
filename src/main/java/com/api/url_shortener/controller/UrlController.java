@@ -1,6 +1,7 @@
 package com.api.url_shortener.controller;
 
 import com.api.url_shortener.dto.CountResponse;
+import com.api.url_shortener.dto.CustomizedUrlRequest;
 import com.api.url_shortener.dto.UrlRequest;
 import com.api.url_shortener.dto.UrlResponse;
 import com.api.url_shortener.service.UrlService;
@@ -10,9 +11,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -29,6 +27,16 @@ public class UrlController {
     @PostMapping("/shorten")
     public ResponseEntity<UrlResponse> shorten(@Valid @RequestBody UrlRequest urlRequest) {
         return ResponseEntity.ok(urlService.shorten(urlRequest));
+    }
+
+    @Operation(
+            summary = "Shorten with customization",
+            description = "Endpoint that shortens a URL with a custom token",
+            tags = "URL"
+    )
+    @PostMapping("/shorten/custom")
+    public ResponseEntity<UrlResponse> shortenWithCustomization(@Valid @RequestBody CustomizedUrlRequest customizedUrlRequest) {
+        return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest));
     }
 
     @Operation(

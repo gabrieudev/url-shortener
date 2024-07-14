@@ -1,9 +1,11 @@
 package com.api.url_shortener.service;
 
 import com.api.url_shortener.dto.CountResponse;
+import com.api.url_shortener.dto.CustomizedUrlRequest;
 import com.api.url_shortener.dto.UrlRequest;
 import com.api.url_shortener.dto.UrlResponse;
 import com.api.url_shortener.exception.EntityNotFoundException;
+import com.api.url_shortener.exception.UrlAlreadyExistsException;
 import com.api.url_shortener.model.Url;
 import com.api.url_shortener.repository.UrlRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -36,6 +37,21 @@ public class UrlService {
         url.setExpiresAt(Instant.now().plusSeconds(86400));
         urlRepository.save(url);
         return new UrlResponse(shortenedUrl + token, url.getExpiresAt());
+    }
+
+    public UrlResponse shortenWithCustomization(CustomizedUrlRequest customizedUrlRequest) {
+        if (urlRepository.existsById(customizedUrlRequest.getToken())) {
+            throw new UrlAlreadyExistsException("URL with this token already exists: " + customizedUrlRequest.getToken());
+        }
+        Url url = new Url(
+                customizedUrlRequest.getToken(),
+                customizedUrlRequest.getFullUrl(),
+                Instant.now().plusSeconds(86400),
+                0
+        );
+        String shortenedUrl = "http://localhost:8080/r/" + customizedUrlRequest.getToken();
+        urlRepository.save(url);
+        return new UrlResponse(shortenedUrl, url.getExpiresAt());
     }
 
     public void delete(String token) {
