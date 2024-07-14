@@ -1,5 +1,6 @@
 package com.api.url_shortener.controller;
 
+import com.api.url_shortener.dto.CountResponse;
 import com.api.url_shortener.dto.UrlRequest;
 import com.api.url_shortener.dto.UrlResponse;
 import com.api.url_shortener.service.UrlService;
@@ -60,7 +61,7 @@ public class UrlController {
             tags = "URL"
     )
     @GetMapping("/r/{token}/count")
-    public ResponseEntity<Map<String, Integer>> getCount(@PathVariable("token") String token) {
+    public ResponseEntity<CountResponse> getCount(@PathVariable("token") String token) {
         return ResponseEntity.ok(urlService.getCount(token));
     }
 

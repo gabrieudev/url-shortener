@@ -1,5 +1,6 @@
 package com.api.url_shortener.service;
 
+import com.api.url_shortener.dto.CountResponse;
 import com.api.url_shortener.dto.UrlRequest;
 import com.api.url_shortener.dto.UrlResponse;
 import com.api.url_shortener.exception.EntityNotFoundException;
@@ -58,11 +59,11 @@ public class UrlService {
         }
     }
 
-    public Map<String, Integer> getCount(String token) {
+    public CountResponse getCount(String token) {
         Url url = urlRepository.findById(token).orElseThrow(
                 () -> new EntityNotFoundException("URL not found")
         );
-        return Map.of("count", url.getCount());
+        return new CountResponse(url.getCount());
     }
 
     public void checkAndDelete(Instant dateTime) {
