@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -31,10 +32,15 @@ public class UrlController {
         urlService.redirect(token, httpServletResponse);
     }
 
-    @DeleteMapping("/{token}")
+    @DeleteMapping("/r/{token}")
     public ResponseEntity<String> delete(@PathVariable("token") String token) {
         urlService.delete(token);
         return ResponseEntity.ok("Shortened URL removed successfully");
+    }
+
+    @GetMapping("/r/{token}/count")
+    public ResponseEntity<Map<String, Integer>> getCount(@PathVariable("token") String token) {
+        return ResponseEntity.ok(urlService.getCount(token));
     }
 
 }

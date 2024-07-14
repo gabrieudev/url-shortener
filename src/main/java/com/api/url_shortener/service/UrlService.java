@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -22,10 +23,11 @@ public class UrlService {
     private UrlRepository urlRepository;
 
     public UrlResponse shorten(UrlRequest urlRequest) {
-        Url url = new Url();
-        url.setFullUrl(urlRequest.getFullUrl());
         String shortenedUrl = "http://localhost:8080/r/";
         String token;
+        Url url = new Url();
+        url.setFullUrl(urlRequest.getFullUrl());
+        url.setCount(0);
         do {
             token = RandomStringUtils.randomAlphanumeric(5);
         } while (urlRepository.existsById(token));
@@ -47,11 +49,20 @@ public class UrlService {
                 () -> new EntityNotFoundException("URL not found")
         );
         String fullUrl = url.getFullUrl();
+        url.setCount(url.getCount()+1);
+        urlRepository.save(url);
         try {
             httpServletResponse.sendRedirect(fullUrl);
         } catch (Exception e) {
             log.error("error redirecting to URl [{}]: [{}]", fullUrl, e.getLocalizedMessage());
         }
+    }
+
+    public Map<String, Integer> getCount(String token) {
+        Url url = urlRepository.findById(token).orElseThrow(
+                () -> new EntityNotFoundException("URL not found")
+        );
+        return Map.of("count", url.getCount());
     }
 
     public void checkAndDelete(Instant dateTime) {
