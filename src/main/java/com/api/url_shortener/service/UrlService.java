@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class UrlService {
@@ -49,6 +50,13 @@ public class UrlService {
         );
         String fullUrl = url.getFullUrl();
         httpServletResponse.sendRedirect(fullUrl);
+    }
+
+    public void checkAndDelete(Instant dateTime) {
+        List<Url> urls = urlRepository.findByExpiresAtBefore(dateTime);
+        urls.forEach(
+                url -> urlRepository.delete(url)
+        );
     }
 
 }
