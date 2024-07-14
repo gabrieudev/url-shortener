@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -35,6 +36,15 @@ public class RestExceptionHandler {
     public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_ACCEPTABLE, Objects.requireNonNull(e.getFieldError()).getDefaultMessage());
         problemDetail.setTitle("Your request parameters didn't validate");
+        problemDetail.setProperty("timestamp", Instant.now());
+        problemDetail.setProperty("stacktrace", e.getStackTrace());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ProblemDetail handleIOException(IOException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
+        problemDetail.setTitle("Invalid URL");
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("stacktrace", e.getStackTrace());
         return problemDetail;
