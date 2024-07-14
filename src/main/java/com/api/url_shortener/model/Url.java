@@ -12,19 +12,15 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "token")
 @Table(name = "tb_urls")
 public class Url {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String token;
 
     @Column(name = "full_url", nullable = false)
     private String fullUrl;
-
-    @Column(name = "shortened_url", nullable = false, unique = true)
-    private String shortenedUrl;
 
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;

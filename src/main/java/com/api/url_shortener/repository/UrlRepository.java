@@ -6,12 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface UrlRepository extends JpaRepository<Url, Long> {
-    boolean existsByShortenedUrl(String shortenedUrl);
-    Optional<Url> findByShortenedUrl(String shortenedUrl);
-
+public interface UrlRepository extends JpaRepository<Url, String> {
     List<Url> findByExpiresAtBefore(Instant dateTime);
 }

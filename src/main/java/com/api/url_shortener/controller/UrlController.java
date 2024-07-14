@@ -23,17 +23,17 @@ public class UrlController {
         return ResponseEntity.ok(urlService.shorten(urlRequest));
     }
 
-    @GetMapping("/r/{code}")
+    @GetMapping("/r/{token}")
     public void redirect(
             HttpServletResponse httpServletResponse,
-            @PathVariable("code") String code
-    ) throws IOException {
-        urlService.redirect(code, httpServletResponse);
+            @PathVariable("token") String token
+    ) {
+        urlService.redirect(token, httpServletResponse);
     }
 
-    @DeleteMapping("/{urlId}")
-    public ResponseEntity<String> delete(@PathVariable("urlId") Long urlId) {
-        urlService.delete(urlId);
+    @DeleteMapping("/{token}")
+    public ResponseEntity<String> delete(@PathVariable("token") String token) {
+        urlService.delete(token);
         return ResponseEntity.ok("Shortened URL removed successfully");
     }
 
