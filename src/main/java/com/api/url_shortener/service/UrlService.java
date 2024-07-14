@@ -1,9 +1,9 @@
 package com.api.url_shortener.service;
 
-import com.api.url_shortener.dto.CountResponse;
-import com.api.url_shortener.dto.CustomizedUrlRequest;
-import com.api.url_shortener.dto.UrlRequest;
-import com.api.url_shortener.dto.UrlResponse;
+import com.api.url_shortener.controller.dto.CountResponse;
+import com.api.url_shortener.controller.dto.CustomizedUrlRequest;
+import com.api.url_shortener.controller.dto.UrlRequest;
+import com.api.url_shortener.controller.dto.UrlResponse;
 import com.api.url_shortener.exception.EntityNotFoundException;
 import com.api.url_shortener.exception.UrlAlreadyExistsException;
 import com.api.url_shortener.model.Url;

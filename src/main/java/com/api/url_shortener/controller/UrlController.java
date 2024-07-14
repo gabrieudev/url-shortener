@@ -1,9 +1,9 @@
 package com.api.url_shortener.controller;
 
-import com.api.url_shortener.dto.CountResponse;
-import com.api.url_shortener.dto.CustomizedUrlRequest;
-import com.api.url_shortener.dto.UrlRequest;
-import com.api.url_shortener.dto.UrlResponse;
+import com.api.url_shortener.controller.dto.CountResponse;
+import com.api.url_shortener.controller.dto.CustomizedUrlRequest;
+import com.api.url_shortener.controller.dto.UrlRequest;
+import com.api.url_shortener.controller.dto.UrlResponse;
 import com.api.url_shortener.service.UrlService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
