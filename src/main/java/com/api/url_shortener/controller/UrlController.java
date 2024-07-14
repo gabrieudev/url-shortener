@@ -3,6 +3,7 @@ package com.api.url_shortener.controller;
 import com.api.url_shortener.dto.UrlRequest;
 import com.api.url_shortener.dto.UrlResponse;
 import com.api.url_shortener.service.UrlService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,21 @@ public class UrlController {
     @Autowired
     private UrlService urlService;
 
+    @Operation(
+            summary = "Shorten URL",
+            description = "Endpoint that shortens a URL and returns it with the expiration time",
+            tags = "URL"
+    )
     @PostMapping("/shorten")
     public ResponseEntity<UrlResponse> shorten(@Valid @RequestBody UrlRequest urlRequest) {
         return ResponseEntity.ok(urlService.shorten(urlRequest));
     }
 
+    @Operation(
+            summary = "Redirect URL",
+            description = "Endpoint that redirects a shortened URL to the full URL",
+            tags = "URL"
+    )
     @GetMapping("/r/{token}")
     public void redirect(
             HttpServletResponse httpServletResponse,
@@ -32,12 +43,22 @@ public class UrlController {
         urlService.redirect(token, httpServletResponse);
     }
 
+    @Operation(
+            summary = "Delete URL",
+            description = "Endpoint that deletes a shortened URL",
+            tags = "URL"
+    )
     @DeleteMapping("/r/{token}")
     public ResponseEntity<String> delete(@PathVariable("token") String token) {
         urlService.delete(token);
         return ResponseEntity.ok("Shortened URL removed successfully");
     }
 
+    @Operation(
+            summary = "Get click count",
+            description = "Endpoint that gets click count of a shortened URL",
+            tags = "URL"
+    )
     @GetMapping("/r/{token}/count")
     public ResponseEntity<Map<String, Integer>> getCount(@PathVariable("token") String token) {
         return ResponseEntity.ok(urlService.getCount(token));
