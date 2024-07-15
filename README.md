@@ -1,13 +1,8 @@
-# RESTful API for URL Shortener
+# URL Shortener
 
-![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
+![Java](https://img.shields.io/badge/Java-17-orange) ![JavaScript](https://img.shields.io/badge/JavaScript--yellow) ![HTML](https://img.shields.io/badge/HTML-5-blue) ![CSS](https://img.shields.io/badge/CSS-3-blue) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
 
-Welcome to my **RESTful API for URL Shortener** project.
-
-Please select your preferred language:
-
-- [English](README.md)
-- [Português (Brasil)](README.pt-br.md)
+Welcome to my **URL Shortener** project.
 
 ## Table of Contents
 
@@ -21,24 +16,28 @@ Please select your preferred language:
 
 ## Introduction
 
-The main goal of this project is to provide a RESTful API capable of shortening URLs. Additionally, it is also possible to customize characters and view the number of accesses to a shortened URL.
+The main goal of this project is to provide a RESTful API capable of receiving a URL, storing it in a database with an expiration date, and redirecting to the original URL when called. Additionally, it's possible to customize characters and view the access count of a shortened URL.
 
 ## Features
 
 - URL shortening.
-- Viewing the number of accesses to the URL.
+- View access count for a URL.
+- Web page with HTML, CSS, and JavaScript.
 - Integration with MySQL database.
-- Documentation of each endpoint using Swagger.
+- Documentation for each endpoint using Swagger.
 
 ## Technologies
 
-- ![Java](https://img.shields.io/badge/Java-17-orange): Programming language.
+- ![Java](https://img.shields.io/badge/Java-17-orange): Programming language used in the backend.
+- ![JavaScript](https://img.shields.io/badge/JavaScript--yellow): Programming language used in the frontend.
 - ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green): Framework used for building applications.
 - ![MySQL](https://img.shields.io/badge/MySQL-Database-blue): Relational database.
+- ![HTML](https://img.shields.io/badge/HTML-5-blue): Markup language.
+- ![CSS](https://img.shields.io/badge/CSS-3-blue): Styling tool.
 
 ## Getting Started
 
-Follow these steps to run the project on your machine (Docker installation required):
+Follow these steps to run the project on your machine (Docker is required):
 
 1. Clone the repository: `git clone https://github.com/gabrieudev/url-shortener.git`
 2. Navigate to the project directory: `cd <path>`
@@ -47,13 +46,14 @@ Follow these steps to run the project on your machine (Docker installation requi
 5. Go back to the initial directory: `cd <path>`
 6. Build the project: `./mvnw clean install` (for Windows: `mvnw.cmd clean install`)
 7. Run the application: `./mvnw spring-boot:run` (for Windows: `mvnw.cmd spring-boot:run`)
+8. Access the web page: `http://localhost:8080`
 
 ## Endpoints
 
 - `POST /shorten`: Shortens a URL with random characters.
 - `POST /shorten/custom`: Shortens a URL with custom characters.
 - `GET /r/{token}`: Redirects from a shortened URL to the full URL.
-- `GET /r/{token}/count`: Gets the number of accesses to the shortened URL.
+- `GET /r/{token}/count`: Retrieves the access count for the shortened URL.
 - `DELETE /r/{token}`: Deletes a shortened URL.
 
 Access the full documentation at the `/swagger-ui.html` endpoint.

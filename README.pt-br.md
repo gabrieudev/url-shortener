@@ -1,8 +1,8 @@
-# API RESTful para encurtador de URLs 
+# Encurtador de URL
 
-![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
+![Java](https://img.shields.io/badge/Java-17-orange) ![JavaScript](https://img.shields.io/badge/JavaScript--yellow) ![HTML](https://img.shields.io/badge/HTML-5-blue) ![CSS](https://img.shields.io/badge/CSS-3-blue) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
 
-Seja bem vindo(a) ao meu projeto de **API RESTful para encurtador de URLs**. 
+Seja bem vindo(a) ao meu projeto de **Encurtador de URL**. 
 
 ## Tabela de conteúdos
 
@@ -16,20 +16,24 @@ Seja bem vindo(a) ao meu projeto de **API RESTful para encurtador de URLs**.
 
 ## Introdução
 
-O objetivo principal deste projeto é fornecer uma API RESTful capaz de encurtar URLs. Além disso, também é possível customizar caracteres e visualizar a quantidade de acessos de uma URL encurtada.
+O objetivo principal deste projeto é fornecer uma API RESTful capaz de receber uma URL, armazená-la em um banco de dados com um prazo de validade e, caso ela receba uma chamada, redirecionar para a URL original. Além disso, também é possível customizar caracteres e visualizar a quantidade de acessos de uma URL encurtada.
 
 ## Funcionalidades
 
 - Encurtamento de URL.
 - Visualização da quantidade de acessos à URL.
+- Página web com HTML, CSS e JavaScript.
 - Integração com o banco de dados MySQL.
 - Documentação de cada endpoint utilizando Swagger.
 
 ## Tecnologias
 
-- ![Java](https://img.shields.io/badge/Java-17-orange): Linguagem de programação.
+- ![Java](https://img.shields.io/badge/Java-17-orange): Linguagem de programação usada no backend.
+- ![JavaScript](https://img.shields.io/badge/JavaScript--yellow): Linguagem de programação usada no frontend.
 - ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green): Framework usado para a construção de aplicações.
 - ![MySQL](https://img.shields.io/badge/MySQL-Database-blue): Banco de dados relacional.
+- ![HTML](https://img.shields.io/badge/HTML-5-blue): Linguagem de marcação de texto.
+- ![CSS](https://img.shields.io/badge/CSS-3-blue): Ferramenta de estilização.
 
 ## Iniciando
 
@@ -42,6 +46,7 @@ Siga esses passos para executar o projeto na sua máquina (é necessário ter o 
 5. Volte para o diretório inicial: `cd <caminho>`
 6. Construa o projeto: `./mvnw clean install` (para Windows: `mvnw.cmd clean install`)
 7. Execute a aplicação: `./mvnw spring-boot:run` (para Windows: `mvnw.cmd spring-boot:run`)
+8. Acesse a página web: `http://localhost:8080`
 
 ## Endpoints
 
