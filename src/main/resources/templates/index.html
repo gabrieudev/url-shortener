@@ -95,43 +95,59 @@
     const baseUrl = 'http://localhost:8080';
 
     async function shortenUrl() {
-        try {
-            const fullUrl = document.getElementById('fullUrl').value;
-            const response = await fetch(`${baseUrl}/shorten`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fullUrl })
-            });
-            const result = await response.json();
-            if (response.ok) {
-                document.getElementById('shortenResult').textContent = `Shortened URL: ${result.shortenedUrl}, Expires At: ${result.expiresAt}`;
-            } else {
-                document.getElementById('shortenResult').textContent = `Error: ${result.detail}`;
-            }
-        } catch (error) {
-            document.getElementById('shortenResult').textContent = `Error: ${error.message}`;
+    try {
+        const fullUrl = document.getElementById('fullUrl').value;
+        const response = await fetch(`${baseUrl}/shorten`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fullUrl })
+        });
+        const result = await response.json();
+        const shortenResultElement = document.getElementById('shortenResult');
+        if (response.ok) {
+            shortenResultElement.textContent = '';
+            const linkElement = document.createElement('a');
+            linkElement.href = result.shortenedUrl;
+            linkElement.textContent = result.shortenedUrl;
+            linkElement.target = '_blank';
+            shortenResultElement.appendChild(document.createTextNode('Shortened URL: '));
+            shortenResultElement.appendChild(linkElement);
+        } else {
+            shortenResultElement.textContent = `Error: ${result.detail}`;
         }
+    } catch (error) {
+        document.getElementById('shortenResult').textContent = `Error: ${error.message}`;
     }
+}
+
 
     async function shortenCustomUrl() {
-        try {
-            const fullUrl = document.getElementById('customFullUrl').value;
-            const token = document.getElementById('customToken').value;
-            const response = await fetch(`${baseUrl}/shorten/custom`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fullUrl, token })
-            });
-            const result = await response.json();
-            if (response.ok) {
-                document.getElementById('shortenCustomResult').textContent = `Shortened Custom URL: ${result.shortenedUrl}, Expires At: ${result.expiresAt}`;
-            } else {
-                document.getElementById('shortenCustomResult').textContent = `Error: ${result.detail}`;
-            }
-        } catch (error) {
-            document.getElementById('shortenCustomResult').textContent = `Error: ${error.message}`;
+    try {
+        const fullUrl = document.getElementById('customFullUrl').value;
+        const token = document.getElementById('customToken').value;
+        const response = await fetch(`${baseUrl}/shorten/custom`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fullUrl, token })
+        });
+        const result = await response.json();
+        const shortenCustomResultElement = document.getElementById('shortenCustomResult');
+        if (response.ok) {
+            shortenCustomResultElement.textContent = '';
+            const linkElement = document.createElement('a');
+            linkElement.href = result.shortenedUrl;
+            linkElement.textContent = result.shortenedUrl;
+            linkElement.target = '_blank';
+            shortenCustomResultElement.appendChild(document.createTextNode('Shortened Custom URL: '));
+            shortenCustomResultElement.appendChild(linkElement);
+        } else {
+            shortenCustomResultElement.textContent = `Error: ${result.detail}`;
         }
+    } catch (error) {
+        document.getElementById('shortenCustomResult').textContent = `Error: ${error.message}`;
     }
+}
+
 
     async function getUrlCount() {
         try {
