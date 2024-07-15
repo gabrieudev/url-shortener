@@ -74,8 +74,8 @@
 <div class="container">
     <h2>Get URL Access Count</h2>
     <div class="input-group">
-        <label for="tokenCount">Token:</label>
-        <input type="text" id="tokenCount">
+        <label for="urlCount">Shortened URL:</label>
+        <input type="text" id="urlCount">
     </div>
     <button onclick="getUrlCount()">Get Count</button>
     <div class="result" id="countResult"></div>
@@ -84,8 +84,8 @@
 <div class="container">
     <h2>Delete URL</h2>
     <div class="input-group">
-        <label for="tokenDelete">Token:</label>
-        <input type="text" id="tokenDelete">
+        <label for="urlDelete">Shortened URL:</label>
+        <input type="text" id="urlDelete">
     </div>
     <button onclick="deleteUrl()">Delete</button>
     <div class="result" id="deleteResult"></div>
@@ -135,8 +135,8 @@
 
     async function getUrlCount() {
         try {
-            const token = document.getElementById('tokenCount').value;
-            const response = await fetch(`${baseUrl}/r/${token}/count`);
+            const token = document.getElementById('urlCount').value;
+            const response = await fetch(`${token}/count`);
             const result = await response.json();
             if (response.ok) {
                 document.getElementById('countResult').textContent = `Access Count: ${result.count}`;
@@ -150,8 +150,8 @@
 
     async function deleteUrl() {
         try {
-            const token = document.getElementById('tokenDelete').value;
-            const response = await fetch(`${baseUrl}/r/${token}`, {
+            const token = document.getElementById('urlDelete').value;
+            const response = await fetch(`${token}`, {
                 method: 'DELETE'
             });
             const result = await response.text();
