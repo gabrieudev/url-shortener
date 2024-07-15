@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>URL Shortener</h1>
+
+<div class="container">
+    <h2>Shorten URL</h2>
+    <div class="input-group">
+        <label for="fullUrl">Full URL:</label>
+        <input type="text" id="fullUrl">
+    </div>
+    <button onclick="shortenUrl()">Shorten</button>
+    <div class="result" id="shortenResult"></div>
+</div>
+
+<div class="container">
+    <h2>Shorten Custom URL</h2>
+    <div class="input-group">
+        <label for="customFullUrl">Full URL:</label>
+        <input type="text" id="customFullUrl">
+    </div>
+    <div class="input-group">
+        <label for="customToken">Custom Token:</label>
+        <input type="text" id="customToken">
+    </div>
+    <button onclick="shortenCustomUrl()">Shorten Custom</button>
+    <div class="result" id="shortenCustomResult"></div>
+</div>
+
+<div class="container">
+    <h2>Get URL Access Count</h2>
+    <div class="input-group">
+        <label for="tokenCount">Token:</label>
+        <input type="text" id="tokenCount">
+    </div>
+    <button onclick="getUrlCount()">Get Count</button>
+    <div class="result" id="countResult"></div>
+</div>
+
+<div class="container">
+    <h2>Delete URL</h2>
+    <div class="input-group">
+        <label for="tokenDelete">Token:</label>
+        <input type="text" id="tokenDelete">
+    </div>
+    <button onclick="deleteUrl()">Delete</button>
+    <div class="result" id="deleteResult"></div>
+</div>
+
+<script>
+    const baseUrl = 'http://localhost:8080';
+
+    async function shortenUrl() {
+        try {
+            const fullUrl = document.getElementById('fullUrl').value;
+            const response = await fetch(`${baseUrl}/shorten`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullUrl })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                document.getElementById('shortenResult').textContent = `Shortened URL: ${result.shortenedUrl}, Expires At: ${result.expiresAt}`;
+            } else {
+                document.getElementById('shortenResult').textContent = `Error: ${result.detail}`;
+            }
+        } catch (error) {
+            document.getElementById('shortenResult').textContent = `Error: ${error.message}`;
+        }
+    }
+
+    async function shortenCustomUrl() {
+        try {
+            const fullUrl = document.getElementById('customFullUrl').value;
+            const token = document.getElementById('customToken').value;
+            const response = await fetch(`${baseUrl}/shorten/custom`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullUrl, token })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                document.getElementById('shortenCustomResult').textContent = `Shortened Custom URL: ${result.shortenedUrl}, Expires At: ${result.expiresAt}`;
+            } else {
+                document.getElementById('shortenCustomResult').textContent = `Error: ${result.detail}`;
+            }
+        } catch (error) {
+            document.getElementById('shortenCustomResult').textContent = `Error: ${error.message}`;
+        }
+    }
+
+    async function getUrlCount() {
+        try {
+            const token = document.getElementById('tokenCount').value;
+            const response = await fetch(`${baseUrl}/r/${token}/count`);
+            const result = await response.json();
+            if (response.ok) {
+                document.getElementById('countResult').textContent = `Access Count: ${result.count}`;
+            } else {
+                document.getElementById('countResult').textContent = `Error: ${result.detail}`;
+            }
+        } catch (error) {
+            document.getElementById('countResult').textContent = `Error: ${error.message}`;
+        }
+    }
+
+    async function deleteUrl() {
+        try {
+            const token = document.getElementById('tokenDelete').value;
+            const response = await fetch(`${baseUrl}/r/${token}`, {
+                method: 'DELETE'
+            });
+            const result = await response.text();
+            if (response.ok) {
+                document.getElementById('deleteResult').textContent = `Success: ${result}`;
+            } else {
+                const error = JSON.parse(result);
+                document.getElementById('deleteResult').textContent = `Error: ${error.detail}`;
+            }
+        } catch (error) {
+            document.getElementById('deleteResult').textContent = `Error: ${error.message}`;
+        }
+    }
+</script>
+</body>
+</html>
