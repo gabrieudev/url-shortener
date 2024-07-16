@@ -16,15 +16,18 @@ Welcome to my **URL Shortener** project.
 
 ## Introduction
 
-The main goal of this project is to provide a RESTful API capable of receiving a URL, storing it in a database with an expiration date, and redirecting to the original URL when called. Additionally, it's possible to customize characters and view the access count of a shortened URL.
+The main goal of this project is to provide a RESTful API capable of receiving a URL, storing it in a database, and redirecting to the original URL upon request. Additionally, the project implements authentication with JWTs and role-based authorization for users, utilizing the latest and best practices to ensure the integrity of sensitive data.
 
 ## Features
 
+- User login and registration.
+- Email confirmation for registration.
 - URL shortening.
-- View access count for a URL.
+- Subscription plans for URLs without expiration.
+- URL access count visualization.
 - Web page with HTML, CSS, and JavaScript.
 - Integration with MySQL database.
-- Documentation for each endpoint using Swagger.
+- Swagger documentation for each endpoint.
 
 ## Technologies
 
@@ -42,7 +45,7 @@ Follow these steps to run the project on your machine (Docker is required):
 1. Clone the repository: `git clone https://github.com/gabrieudev/url-shortener.git`
 2. Navigate to the project directory: `cd <path>`
 3. Navigate to the docker directory: `cd docker`
-4. Run the docker compose file to create and initialize the MySQL container: `docker compose up`
+4. Run the docker compose file to create and start the MySQL container: `docker compose up`
 5. Go back to the initial directory: `cd <path>`
 6. Build the project: `./mvnw clean install` (for Windows: `mvnw.cmd clean install`)
 7. Run the application: `./mvnw spring-boot:run` (for Windows: `mvnw.cmd spring-boot:run`)
@@ -50,21 +53,37 @@ Follow these steps to run the project on your machine (Docker is required):
 
 ## Endpoints
 
-- `POST /shorten`: Shortens a URL with random characters.
-- `POST /shorten/custom`: Shortens a URL with custom characters.
-- `GET /r/{token}`: Redirects from a shortened URL to the full URL.
-- `GET /r/{token}/count`: Retrieves the access count for the shortened URL.
-- `DELETE /r/{token}`: Deletes a shortened URL.
+User:
 
-Access the full documentation at the `/swagger-ui.html` endpoint.
+- `POST /auth/register`: Registers a user and sends a confirmation link to their email.
+- `GET /users/confirm`: Verifies the email.
+- `POST /auth/login`: Logs in and receives a JWT.
+- `ADMIN Role` `GET /users`: Retrieves all users.
+- `ADMIN Role` `DELETE /users/{userId}`: Deletes a user.
+- `BASIC Role` `GET /users/{userId}`: Retrieves a user by ID.
+- `BASIC Role` `POST /users/change-password`: Changes a user's password.
+
+URL:
+
+- `BASIC Role` `POST /shorten`: Shortens a URL with random characters.
+- `BASIC Role` `POST /shorten/custom`: Shortens a URL with custom characters.
+- `GET /r/{token}`: Redirects from a shortened URL to the full URL.
+- `BASIC Role` `GET /r/{token}/count`: Retrieves the access count for the shortened URL.
+- `ADMIN Role` `DELETE /r/{token}`: Deletes a shortened URL.
+
+User subscription plan:
+
+- `BASIC Role` `POST /user-subscription/change`: Chooses a subscription plan.
+
+Access the complete documentation at the endpoint `/swagger-ui.html`
 
 ## Contributions
 
-Contributions are very welcome! If you want to contribute, fork the repository and create a pull request.
+Contributions are very welcome! If you would like to contribute, fork the repository and create a pull request.
 
 ## Contact
 
-If you have any suggestions or questions, contact me on [LinkedIn](https://www.linkedin.com/in/gabrieudev).
+If you have any suggestions or questions, contact me on [LinkedIn](https://www.linkedin.com/in/gabrieudev)
 
 ---
 

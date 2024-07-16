@@ -53,11 +53,27 @@ Siga esses passos para executar o projeto na sua máquina (é necessário ter o 
 
 ## Endpoints
 
-- `POST /shorten`: Encurta uma URL com caracteres aleatórios.
-- `POST /shorten/custom`: Encurta uma URL adicionando caracteres customizados.
+User:
+
+- `POST /auth/register`: Registra um usuário e envia um link para confirmação ao seu email.
+- `GET /users/confirm`: Faz a verificação do email.
+- `POST /auth/login`: Realiza o login e recebe um JWT.
+- `ADMIN Role` `GET /users`: Obtém todos usuários.
+- `ADMIN Role` `DELETE /users/{userId}`: Deleta um usuário.
+- `BASIC Role` `GET /users/{userId}`: Obtém um usuário de acordo com o ID.
+- `BASIC Role` `POST /users/change-password`: Muda a senha de um usuário.
+
+URL:
+
+- `BASIC Role` `POST /shorten`: Encurta uma URL com caracteres aleatórios.
+- `BASIC Role` `POST /shorten/custom`: Encurta uma URL adicionando caracteres customizados.
 - `GET /r/{token}`: Redireciona de uma URL encurtada para a URL completa.
-- `GET /r/{token}/count`: Obtém a quantidade de acessos à URL encurtada.
-- `DELETE /r/{token}`: Deleta uma URL encurtada.
+- `BASIC Role` `GET /r/{token}/count`: Obtém a quantidade de acessos à URL encurtada.
+- `ADMIN Role` `DELETE /r/{token}`: Deleta uma URL encurtada.
+
+User subscription plan:
+
+- `BASIC Role` `POST /user-subscription/change`: Escolhe um plano de assinatura.
 
 Acesse a documentação completa no endpoint `/swagger-ui.html`
 
