@@ -5,10 +5,12 @@ import com.api.url_shortener.exception.EntityNotFoundException;
 import com.api.url_shortener.exception.UserAlreadyExistsException;
 import com.api.url_shortener.model.ConfirmationToken;
 import com.api.url_shortener.model.Role;
+import com.api.url_shortener.model.SubscriptionPlan;
 import com.api.url_shortener.model.User;
 import com.api.url_shortener.repository.ConfirmationTokenRepository;
 import com.api.url_shortener.repository.RoleRepository;
 import com.api.url_shortener.repository.UserRepository;
+import com.api.url_shortener.repository.UserSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,6 +48,9 @@ public class UserService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserSubscriptionRepository userSubscriptionRepository;
+
     public void register(RegisterDTO registerDTO) {
         if (userRepository.existsByEmail(registerDTO.getEmail())) {
             throw new UserAlreadyExistsException("User already exists");
@@ -55,8 +61,8 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(registerDTO.getPassword()));
         user.setEnabled(false);
         user.setRoles(Set.of(role));
-        user.setCreatedAt(Instant.now());
-        user.setUpdatedAt(Instant.now());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
 
         ConfirmationToken confirmationToken = new ConfirmationToken();
@@ -66,7 +72,7 @@ public class UserService {
         confirmationToken.setExpiresAt(Instant.now().plusSeconds(600));
         confirmationTokenRepository.save(confirmationToken);
 
-        String link = "http://localhost:8080/api/users/confirm?token=" + confirmationToken.getToken();
+        String link = "http://localhost:8080/users/confirm?token=" + confirmationToken.getToken();
         Email email = new Email(
                 user.getEmail(),
                 "Email confirm",
@@ -107,7 +113,7 @@ public class UserService {
         }
         String newEncryptedPassword = bCryptPasswordEncoder.encode(passwordDTO.getNewPassword());
         user.setPassword(newEncryptedPassword);
-        user.setUpdatedAt(Instant.now());
+        user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
     }
 

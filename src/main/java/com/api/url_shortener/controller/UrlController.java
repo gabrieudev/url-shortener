@@ -10,6 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +28,12 @@ public class UrlController {
             tags = "URL"
     )
     @PostMapping("/shorten")
-    public ResponseEntity<UrlResponse> shorten(@Valid @RequestBody UrlRequest urlRequest) {
-        return ResponseEntity.ok(urlService.shorten(urlRequest));
+    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
+    public ResponseEntity<UrlResponse> shorten(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody UrlRequest urlRequest
+    ) {
+        return ResponseEntity.ok(urlService.shorten(urlRequest, jwt));
     }
 
     @Operation(
@@ -35,6 +42,7 @@ public class UrlController {
             tags = "URL"
     )
     @PostMapping("/shorten/custom")
+    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<UrlResponse> shortenWithCustomization(@Valid @RequestBody CustomizedUrlRequest customizedUrlRequest) {
         return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest));
     }
@@ -58,6 +66,7 @@ public class UrlController {
             tags = "URL"
     )
     @DeleteMapping("/r/{token}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<String> delete(@PathVariable("token") String token) {
         urlService.delete(token);
         return ResponseEntity.ok("Shortened URL removed successfully");
@@ -69,6 +78,7 @@ public class UrlController {
             tags = "URL"
     )
     @GetMapping("/r/{token}/count")
+    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<CountResponse> getCount(@PathVariable("token") String token) {
         return ResponseEntity.ok(urlService.getCount(token));
     }

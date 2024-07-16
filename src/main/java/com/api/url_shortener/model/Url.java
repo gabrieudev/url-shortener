@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +22,8 @@ public class Url {
     @Column(name = "full_url", nullable = false)
     private String fullUrl;
 
-    @Column(name = "expires_at", nullable = false)
-    private Instant expiresAt;
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
 
     @Column(nullable = false)
     private int count;

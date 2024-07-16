@@ -14,7 +14,7 @@ public class EmailService {
 
     public void send(Email email) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom("auth@gmail.com");
+        simpleMailMessage.setFrom("urlshortener@gmail.com");
         simpleMailMessage.setText(email.body());
         simpleMailMessage.setSubject(email.subject());
         simpleMailMessage.setTo(email.to());
