@@ -13,8 +13,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI urlShortenerOpenAPI(){
         return new OpenAPI()
-                .info(new Info().title("Url Shortener RESTful API")
-                        .description("RESTful API for url shortener")
+                .info(new Info().title("URL Shortener REST API")
+                        .description("REST API for URL shorten")
                         .version("v0.0.1")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
