@@ -52,6 +52,7 @@ public class UrlService {
             token = RandomStringUtils.randomAlphanumeric(5);
         } while (urlRepository.existsById(token));
 
+        url.setUser(user);
         url.setFullUrl(urlRequest.getFullUrl());
         url.setCount(0);
         url.setToken(token);
@@ -61,16 +62,24 @@ public class UrlService {
         return new UrlResponse(shortenedUrl + token);
     }
 
-    public UrlResponse shortenWithCustomization(CustomizedUrlRequest customizedUrlRequest) {
+    public UrlResponse shortenWithCustomization(CustomizedUrlRequest customizedUrlRequest, Jwt jwt) {
         if (urlRepository.existsById(customizedUrlRequest.getToken())) {
             throw new UrlAlreadyExistsException("URL with this token already exists: " + customizedUrlRequest.getToken());
         }
+
+        User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
+        Optional<UserSubscription> userSubscriptionOptional = userSubscriptionRepository.findByUserAndEndDateAfter(user, LocalDateTime.now());
+
+        LocalDateTime expiresAt = userSubscriptionOptional.isEmpty() ? LocalDateTime.now().plusSeconds(86400) : null;
+
         Url url = new Url(
                 customizedUrlRequest.getToken(),
+                user,
                 customizedUrlRequest.getFullUrl(),
-                LocalDateTime.now().plusSeconds(86400),
+                expiresAt,
                 0
         );
+
         String shortenedUrl = "http://localhost:8080/r/" + customizedUrlRequest.getToken();
         urlRepository.save(url);
         return new UrlResponse(shortenedUrl);

@@ -16,11 +16,14 @@ Seja bem vindo(a) ao meu projeto de **Encurtador de URL**.
 
 ## Introdução
 
-O objetivo principal deste projeto é fornecer uma API RESTful capaz de receber uma URL, armazená-la em um banco de dados com um prazo de validade e, caso ela receba uma chamada, redirecionar para a URL original. Além disso, também é possível customizar caracteres e visualizar a quantidade de acessos de uma URL encurtada.
+O objetivo principal deste projeto é fornecer uma API RESTful capaz de receber uma URL, armazená-la em um banco de dados e, caso ela receba uma chamada, redirecionar para a URL original. Além disso, o projeto implementa autenticação com JWTs e autorização por meio de roles para os usuários, utilizando as melhores e mais atualizadas práticas do mercado para assegurar a integridade dos dados sensíveis.
 
 ## Funcionalidades
 
+- Login e registro de usuários.
+- Envio de email para confirmação do registro.
 - Encurtamento de URL.
+- Escolha de plano de assinatura para ter URLs sem prazo de expiração.
 - Visualização da quantidade de acessos à URL.
 - Página web com HTML, CSS e JavaScript.
 - Integração com o banco de dados MySQL.

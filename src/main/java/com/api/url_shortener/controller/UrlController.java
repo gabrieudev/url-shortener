@@ -43,8 +43,11 @@ public class UrlController {
     )
     @PostMapping("/shorten/custom")
     @PreAuthorize("hasAuthority('SCOPE_BASIC')")
-    public ResponseEntity<UrlResponse> shortenWithCustomization(@Valid @RequestBody CustomizedUrlRequest customizedUrlRequest) {
-        return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest));
+    public ResponseEntity<UrlResponse> shortenWithCustomization(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody CustomizedUrlRequest customizedUrlRequest
+    ) {
+        return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest, jwt));
     }
 
     @Operation(
