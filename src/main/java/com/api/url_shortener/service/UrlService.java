@@ -6,7 +6,6 @@ import com.api.url_shortener.controller.dto.UrlRequest;
 import com.api.url_shortener.controller.dto.UrlResponse;
 import com.api.url_shortener.exception.EntityNotFoundException;
 import com.api.url_shortener.exception.UrlAlreadyExistsException;
-import com.api.url_shortener.model.SubscriptionPlan;
 import com.api.url_shortener.model.Url;
 import com.api.url_shortener.model.User;
 import com.api.url_shortener.model.UserSubscription;
@@ -17,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -104,6 +105,13 @@ public class UrlService {
         } catch (Exception e) {
             log.error("error redirecting to URl [{}]: [{}]", fullUrl, e.getLocalizedMessage());
         }
+    }
+
+    public Page<UrlResponse> history(Jwt jwt, Pageable pageable) {
+        User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
+        return urlRepository.findByUser(user, pageable).map(
+                url -> new UrlResponse("http://localhost:8080/r/" + url.getToken())
+        );
     }
 
     public CountResponse getCount(String token) {

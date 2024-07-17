@@ -9,11 +9,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -84,6 +87,19 @@ public class UrlController {
     @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<CountResponse> getCount(@PathVariable("token") String token) {
         return ResponseEntity.ok(urlService.getCount(token));
+    }
+
+    @Operation(
+            summary = "History",
+            description = "Endpoint that obtains a user's history of shortened URLs",
+            tags = "URL"
+    )
+    @GetMapping("/history")
+    public ResponseEntity<List<UrlResponse>> history(
+            @AuthenticationPrincipal Jwt jwt,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(urlService.history(jwt, pageable).getContent());
     }
 
 }
