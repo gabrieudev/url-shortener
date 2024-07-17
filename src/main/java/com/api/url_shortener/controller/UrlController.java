@@ -95,6 +95,7 @@ public class UrlController {
             tags = "URL"
     )
     @GetMapping("/history")
+    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<List<UrlResponse>> history(
             @AuthenticationPrincipal Jwt jwt,
             Pageable pageable

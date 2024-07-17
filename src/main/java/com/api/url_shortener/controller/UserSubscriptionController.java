@@ -1,5 +1,6 @@
 package com.api.url_shortener.controller;
 
+import com.api.url_shortener.controller.dto.SubscriptionPlanDTO;
 import com.api.url_shortener.service.UserSubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,17 @@ public class UserSubscriptionController {
     ) {
         userSubscriptionService.changePlan(subscriptionPlanId, jwt);
         return ResponseEntity.ok("Subscription plan changed successfully");
+    }
+
+    @Operation(
+            summary = "Get subscription plan",
+            description = "Endpoint that gets the user's subscription plan",
+            tags = "User subscription plan"
+    )
+    @GetMapping("/subscription-plan")
+    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
+    public ResponseEntity<SubscriptionPlanDTO> getSubscriptionPlan(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(userSubscriptionService.getSubscriptionPlan(jwt));
     }
 
 }
