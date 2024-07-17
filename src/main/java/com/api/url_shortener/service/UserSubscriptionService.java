@@ -1,6 +1,7 @@
 package com.api.url_shortener.service;
 
 import com.api.url_shortener.exception.EntityNotFoundException;
+import com.api.url_shortener.exception.UserSubscriptionAlreadyExistsException;
 import com.api.url_shortener.model.SubscriptionPlan;
 import com.api.url_shortener.model.User;
 import com.api.url_shortener.model.UserSubscription;
@@ -28,10 +29,16 @@ public class UserSubscriptionService {
 
     public void changePlan(Long subscriptionPlanId, Jwt jwt) {
         UserSubscription userSubscription = new UserSubscription();
+
         SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId).orElseThrow(
                 () -> new EntityNotFoundException("Subscription plan not found with this id: " + subscriptionPlanId)
         );
         User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
+
+        if (userSubscriptionRepository.existsByUserAndEndDateAfter(user, LocalDateTime.now())) {
+            throw new UserSubscriptionAlreadyExistsException("You already have a subscription plan");
+        }
+
         userSubscription.setUser(user);
         userSubscription.setSubscriptionPlan(subscriptionPlan);
         userSubscription.setStartDate(LocalDateTime.now());

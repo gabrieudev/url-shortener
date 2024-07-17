@@ -69,4 +69,13 @@ public class RestExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(UserSubscriptionAlreadyExistsException.class)
+    public ProblemDetail handleUserSubscriptionAlreadyExistsException(UserSubscriptionAlreadyExistsException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getLocalizedMessage());
+        problemDetail.setTitle("User subscription already exists");
+        problemDetail.setProperty("timestamp", Instant.now());
+        problemDetail.setProperty("stacktrace", e.getStackTrace());
+        return problemDetail;
+    }
+
 }

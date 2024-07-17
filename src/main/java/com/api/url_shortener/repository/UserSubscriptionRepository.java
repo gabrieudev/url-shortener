@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UserSubscriptionRepository extends JpaRepository<UserSubscription, Long> {
     Optional<UserSubscription> findByUserAndEndDateAfter(User user, LocalDateTime dateTime);
+
+    boolean existsByUserAndEndDateAfter(User user, LocalDateTime dateTime);
 }
