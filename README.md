@@ -4,6 +4,11 @@
 
 Welcome to my **URL Shortener** project.
 
+Please select your preferred language:
+
+- [English](README.md)
+- [Português (Brasil)](README.pt-br.md)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
