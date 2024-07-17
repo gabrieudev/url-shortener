@@ -1,6 +1,7 @@
 package com.api.url_shortener.controller;
 
 import com.api.url_shortener.service.UserSubscriptionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,11 @@ public class UserSubscriptionController {
     @Autowired
     private UserSubscriptionService userSubscriptionService;
 
+    @Operation(
+            summary = "Change subscription plan",
+            description = "Endpoint that changes a user's subscription plan",
+            tags = "User subscription plan"
+    )
     @PostMapping("/change")
     @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<String> changeSubscriptionPlan(
