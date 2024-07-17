@@ -1,8 +1,8 @@
-# Encurtador de URL
+# API RESTful para encurtador de URL
 
-![Java](https://img.shields.io/badge/Java-17-orange) ![JavaScript](https://img.shields.io/badge/JavaScript--yellow) ![HTML](https://img.shields.io/badge/HTML-5-blue) ![CSS](https://img.shields.io/badge/CSS-3-blue) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
+![Java](https://img.shields.io/badge/Java-17-orange) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green) [![LinkedIn](https://img.shields.io/badge/Connect%20on-LinkedIn-blue)](https://www.linkedin.com/in/gabrieudev) ![GPL License](https://img.shields.io/badge/License-GPL-blue)
 
-Seja bem vindo(a) ao meu projeto de **Encurtador de URL**. 
+Seja bem vindo(a) ao meu projeto de **API RESTful para encurtador de URL**. 
 
 ## Tabela de conteúdos
 
@@ -25,18 +25,14 @@ O objetivo principal deste projeto é fornecer uma API RESTful capaz de receber 
 - Encurtamento de URL.
 - Escolha de plano de assinatura para ter URLs sem prazo de expiração.
 - Visualização da quantidade de acessos à URL.
-- Página web com HTML, CSS e JavaScript.
 - Integração com o banco de dados MySQL.
 - Documentação de cada endpoint utilizando Swagger.
 
 ## Tecnologias
 
-- ![Java](https://img.shields.io/badge/Java-17-orange): Linguagem de programação usada no backend.
-- ![JavaScript](https://img.shields.io/badge/JavaScript--yellow): Linguagem de programação usada no frontend.
+- ![Java](https://img.shields.io/badge/Java-17-orange): Linguagem de programação.
 - ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green): Framework usado para a construção de aplicações.
 - ![MySQL](https://img.shields.io/badge/MySQL-Database-blue): Banco de dados relacional.
-- ![HTML](https://img.shields.io/badge/HTML-5-blue): Linguagem de marcação de texto.
-- ![CSS](https://img.shields.io/badge/CSS-3-blue): Ferramenta de estilização.
 
 ## Iniciando
 
@@ -49,7 +45,6 @@ Siga esses passos para executar o projeto na sua máquina (é necessário ter o 
 5. Volte para o diretório inicial: `cd <caminho>`
 6. Construa o projeto: `./mvnw clean install` (para Windows: `mvnw.cmd clean install`)
 7. Execute a aplicação: `./mvnw spring-boot:run` (para Windows: `mvnw.cmd spring-boot:run`)
-8. Acesse a página web: `http://localhost:8080`
 
 ## Endpoints
 
@@ -70,10 +65,12 @@ URL:
 - `GET /r/{token}`: Redireciona de uma URL encurtada para a URL completa.
 - `BASIC Role` `GET /r/{token}/count`: Obtém a quantidade de acessos à URL encurtada.
 - `ADMIN Role` `DELETE /r/{token}`: Deleta uma URL encurtada.
+- `BASIC Role` `GET /history`: Obtém o histórico de URLs encurtadas.
 
 User subscription plan:
 
 - `BASIC Role` `POST /user-subscription/change`: Escolhe um plano de assinatura.
+- `BASIC Role` `GET /user-subscription/subscription-plan`: Obtém o plano de assinatura atual do usuário.
 
 Acesse a documentação completa no endpoint `/swagger-ui.html`
 
