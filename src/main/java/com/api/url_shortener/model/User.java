@@ -1,10 +1,12 @@
 package com.api.url_shortener.model;
 
+import com.api.url_shortener.controller.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -46,5 +48,10 @@ public class User {
 
     @Column(nullable = false)
     private boolean enabled;
+
+    public UserDTO toDto() {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, UserDTO.class);
+    }
 
 }

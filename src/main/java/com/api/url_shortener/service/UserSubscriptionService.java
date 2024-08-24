@@ -26,9 +26,6 @@ public class UserSubscriptionService {
     private UserSubscriptionRepository userSubscriptionRepository;
 
     @Autowired
-    private MappingService mappingService;
-
-    @Autowired
     private UserRepository userRepository;
 
     public void changePlan(Long subscriptionPlanId, Jwt jwt) {
@@ -55,7 +52,7 @@ public class UserSubscriptionService {
         UserSubscription userSubscription = userSubscriptionRepository.findByUserAndEndDateAfter(user, LocalDateTime.now()).orElseThrow(
                 () -> new EntityNotFoundException("You don't have a subscription plan")
         );
-        return mappingService.toDto(userSubscription.getSubscriptionPlan());
+        return userSubscription.getSubscriptionPlan().toDto();
     }
 
 }

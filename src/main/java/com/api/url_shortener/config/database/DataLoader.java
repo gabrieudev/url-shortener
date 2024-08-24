@@ -1,4 +1,4 @@
-package com.api.url_shortener.config.data_loader;
+package com.api.url_shortener.config.database;
 
 import com.api.url_shortener.model.Role;
 import com.api.url_shortener.model.SubscriptionPlan;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -22,8 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Configuration
-@Transactional
-public class AdminDataLoader implements CommandLineRunner {
+public class DataLoader implements CommandLineRunner {
 
     @Value("${admin.email}")
     private String adminEmail;

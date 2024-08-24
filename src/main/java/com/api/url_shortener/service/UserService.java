@@ -28,9 +28,6 @@ import java.util.UUID;
 public class UserService {
 
     @Autowired
-    private MappingService mappingService;
-
-    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -56,7 +53,7 @@ public class UserService {
             throw new UserAlreadyExistsException("User already exists");
         }
 
-        User user = mappingService.toModel(registerDTO);
+        User user = registerDTO.toUser();
         Role role = roleRepository.findByRole("BASIC").orElseThrow();
         user.setPassword(bCryptPasswordEncoder.encode(registerDTO.getPassword()));
         user.setEnabled(false);
@@ -121,7 +118,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User not found with this id: " + userId)
         );
-        return mappingService.toDto(user);
+        return user.toDto();
     }
 
     public void delete(UUID userId) {
@@ -133,7 +130,7 @@ public class UserService {
 
     public Page<UserDTO> getAll(Pageable pageable) {
         return userRepository.findAll(pageable).map(
-                user -> mappingService.toDto(user)
+                User::toDto
         );
     }
 

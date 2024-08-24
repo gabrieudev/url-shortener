@@ -1,5 +1,6 @@
 package com.api.url_shortener.model;
 
+import com.api.url_shortener.controller.dto.SubscriptionPlanDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
 
@@ -30,5 +32,10 @@ public class SubscriptionPlan {
 
     @Column(nullable = false)
     private BigDecimal price;
+
+    public SubscriptionPlanDTO toDto() {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, SubscriptionPlanDTO.class);
+    }
 
 }

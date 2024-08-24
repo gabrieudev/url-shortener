@@ -1,8 +1,10 @@
 package com.api.url_shortener.controller.dto;
 
 import com.api.url_shortener.model.Role;
+import com.api.url_shortener.model.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import java.time.Instant;
 import java.util.Set;
@@ -27,5 +29,10 @@ public class UserDTO {
     private Instant updatedAt;
 
     private boolean enabled;
+
+    public User toModel() {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(this, User.class);
+    }
 
 }
