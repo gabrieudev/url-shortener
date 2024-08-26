@@ -9,14 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -31,12 +25,10 @@ public class UrlController {
             tags = "URL"
     )
     @PostMapping("/shorten")
-    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<UrlResponse> shorten(
-            @AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody UrlRequest urlRequest
     ) {
-        return ResponseEntity.ok(urlService.shorten(urlRequest, jwt));
+        return ResponseEntity.ok(urlService.shorten(urlRequest));
     }
 
     @Operation(
@@ -45,12 +37,10 @@ public class UrlController {
             tags = "URL"
     )
     @PostMapping("/shorten/custom")
-    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<UrlResponse> shortenWithCustomization(
-            @AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody CustomizedUrlRequest customizedUrlRequest
     ) {
-        return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest, jwt));
+        return ResponseEntity.ok(urlService.shortenWithCustomization(customizedUrlRequest));
     }
 
     @Operation(
@@ -72,7 +62,6 @@ public class UrlController {
             tags = "URL"
     )
     @DeleteMapping("/r/{token}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<String> delete(@PathVariable("token") String token) {
         urlService.delete(token);
         return ResponseEntity.ok("Shortened URL removed successfully");
@@ -84,23 +73,8 @@ public class UrlController {
             tags = "URL"
     )
     @GetMapping("/r/{token}/count")
-    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
     public ResponseEntity<CountResponse> getCount(@PathVariable("token") String token) {
         return ResponseEntity.ok(urlService.getCount(token));
-    }
-
-    @Operation(
-            summary = "History",
-            description = "Endpoint that obtains a user's history of shortened URLs",
-            tags = "URL"
-    )
-    @GetMapping("/history")
-    @PreAuthorize("hasAuthority('SCOPE_BASIC')")
-    public ResponseEntity<List<UrlResponse>> history(
-            @AuthenticationPrincipal Jwt jwt,
-            Pageable pageable
-    ) {
-        return ResponseEntity.ok(urlService.history(jwt, pageable).getContent());
     }
 
 }

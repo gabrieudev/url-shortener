@@ -19,10 +19,6 @@ public class Url {
     @Id
     private String token;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(name = "full_url", nullable = false)
     private String fullUrl;
 

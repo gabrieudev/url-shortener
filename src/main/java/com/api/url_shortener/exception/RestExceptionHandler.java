@@ -3,8 +3,6 @@ package com.api.url_shortener.exception;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,24 +22,6 @@ public class RestExceptionHandler {
         return problemDetail;
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ProblemDetail handleAccessDeniedException(AccessDeniedException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getLocalizedMessage());
-        problemDetail.setTitle("Access denied");
-        problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("stacktrace", e.getStackTrace());
-        return problemDetail;
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public ProblemDetail handleBadCredentialsException(BadCredentialsException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getLocalizedMessage());
-        problemDetail.setTitle("Bad credentials");
-        problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("stacktrace", e.getStackTrace());
-        return problemDetail;
-    }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getLocalizedMessage());
@@ -51,28 +31,10 @@ public class RestExceptionHandler {
         return problemDetail;
     }
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ProblemDetail handleUserAlreadyExistsException(UserAlreadyExistsException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getLocalizedMessage());
-        problemDetail.setTitle("User already exists");
-        problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("stacktrace", e.getStackTrace());
-        return problemDetail;
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_ACCEPTABLE, Objects.requireNonNull(e.getFieldError()).getDefaultMessage());
         problemDetail.setTitle("Your request parameters didn't validate");
-        problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("stacktrace", e.getStackTrace());
-        return problemDetail;
-    }
-
-    @ExceptionHandler(UserSubscriptionAlreadyExistsException.class)
-    public ProblemDetail handleUserSubscriptionAlreadyExistsException(UserSubscriptionAlreadyExistsException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getLocalizedMessage());
-        problemDetail.setTitle("User subscription already exists");
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("stacktrace", e.getStackTrace());
         return problemDetail;

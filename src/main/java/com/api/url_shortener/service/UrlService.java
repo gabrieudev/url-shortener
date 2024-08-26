@@ -7,24 +7,16 @@ import com.api.url_shortener.controller.dto.UrlResponse;
 import com.api.url_shortener.exception.EntityNotFoundException;
 import com.api.url_shortener.exception.UrlAlreadyExistsException;
 import com.api.url_shortener.model.Url;
-import com.api.url_shortener.model.User;
-import com.api.url_shortener.model.UserSubscription;
 import com.api.url_shortener.repository.UrlRepository;
-import com.api.url_shortener.repository.UserRepository;
-import com.api.url_shortener.repository.UserSubscriptionRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -33,55 +25,39 @@ public class UrlService {
     @Autowired
     private UrlRepository urlRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    @Value("${app.base_url}")
+    private String baseUrl;
 
-    @Autowired
-    private UserSubscriptionRepository userSubscriptionRepository;
-
-    public UrlResponse shorten(UrlRequest urlRequest, Jwt jwt) {
-        String shortenedUrl = "http://localhost:8080/r/";
+    public UrlResponse shorten(UrlRequest urlRequest) {
+        String shortenedUrl = baseUrl+"/r/";
         Url url = new Url();
         String token;
-
-        User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
-        Optional<UserSubscription> userSubscriptionOptional = userSubscriptionRepository.findByUserAndEndDateAfter(user, LocalDateTime.now());
-
-        LocalDateTime expiresAt = userSubscriptionOptional.isEmpty() ? LocalDateTime.now().plusSeconds(86400) : null;
 
         do {
             token = RandomStringUtils.randomAlphanumeric(5);
         } while (urlRepository.existsById(token));
 
-        url.setUser(user);
         url.setFullUrl(urlRequest.getFullUrl());
         url.setCount(0);
         url.setToken(token);
-        url.setExpiresAt(expiresAt);
 
         urlRepository.save(url);
         return new UrlResponse(shortenedUrl + token);
     }
 
-    public UrlResponse shortenWithCustomization(CustomizedUrlRequest customizedUrlRequest, Jwt jwt) {
+    public UrlResponse shortenWithCustomization(CustomizedUrlRequest customizedUrlRequest) {
         if (urlRepository.existsById(customizedUrlRequest.getToken())) {
             throw new UrlAlreadyExistsException("URL with this token already exists: " + customizedUrlRequest.getToken());
         }
 
-        User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
-        Optional<UserSubscription> userSubscriptionOptional = userSubscriptionRepository.findByUserAndEndDateAfter(user, LocalDateTime.now());
-
-        LocalDateTime expiresAt = userSubscriptionOptional.isEmpty() ? LocalDateTime.now().plusSeconds(86400) : null;
-
         Url url = new Url(
                 customizedUrlRequest.getToken(),
-                user,
                 customizedUrlRequest.getFullUrl(),
-                expiresAt,
+                null,
                 0
         );
 
-        String shortenedUrl = "http://localhost:8080/r/" + customizedUrlRequest.getToken();
+        String shortenedUrl = baseUrl+"/r/" + customizedUrlRequest.getToken();
         urlRepository.save(url);
         return new UrlResponse(shortenedUrl);
     }
@@ -105,13 +81,6 @@ public class UrlService {
         } catch (Exception e) {
             log.error("error redirecting to URl [{}]: [{}]", fullUrl, e.getLocalizedMessage());
         }
-    }
-
-    public Page<UrlResponse> history(Jwt jwt, Pageable pageable) {
-        User user = userRepository.findById(UUID.fromString(jwt.getSubject())).orElseThrow();
-        return urlRepository.findByUser(user, pageable).map(
-                url -> new UrlResponse("http://localhost:8080/r/" + url.getToken())
-        );
     }
 
     public CountResponse getCount(String token) {
