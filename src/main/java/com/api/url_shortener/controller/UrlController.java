@@ -21,7 +21,7 @@ public class UrlController {
 
     @Operation(
             summary = "Shorten URL",
-            description = "Endpoint that shortens a URL and returns it with the expiration time",
+            description = "Endpoint that shortens a URL",
             tags = "URL"
     )
     @PostMapping("/shorten")

@@ -14,7 +14,7 @@ public class SwaggerConfig {
     public OpenAPI urlShortenerOpenAPI(){
         return new OpenAPI()
                 .info(new Info().title("URL Shortener REST API")
-                        .description("REST API for URL shorten")
+                        .description("REST API made to shorten URLs")
                         .version("v0.0.1")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
