@@ -34,7 +34,7 @@ O objetivo principal deste projeto é fornecer uma API REST capaz de receber uma
 
 Foi realizado o deploy da API utilizando o serviço [Render](https://render.com/).
 
-Acesse a documentação com todos endpoints de forma detalhada: https://short-6suo.onrender.com/swagger-ui.html.
+Acesse a documentação com todos endpoints de forma detalhada: https://linkzip-f511.onrender.com/swagger-ui.html.
 
 Aviso: caso o link não funcione, provavelmente o tempo máximo permitido de um serviço web rodando de forma gratuita, sendo 90 dias, foi expirado. Contate-me para que eu o coloque ao ar novamente.
 

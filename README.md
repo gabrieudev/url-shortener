@@ -39,7 +39,7 @@ The main goal of this project is to provide a REST API capable of receiving a UR
 
 The API has been deployed using the [Render](https://render.com/) service.
 
-Access the documentation with detailed information on all endpoints: https://short-6suo.onrender.com/swagger-ui.html.
+Access the documentation with detailed information on all endpoints: https://linkzip-f511.onrender.com/swagger-ui.html.
 
 Note: If the link doesn't work, it is likely that the maximum allowed runtime for a free web service, which is 90 days, has expired. Please contact me to have it redeployed.
 
