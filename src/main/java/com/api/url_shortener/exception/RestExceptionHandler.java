@@ -15,11 +15,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ProblemDetail handleEntityNotFoundException(EntityNotFoundException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getLocalizedMessage());
-        problemDetail.setTitle("Not found");
-        problemDetail.setProperty("timestamp", Instant.now());
-        problemDetail.setProperty("stacktrace", e.getStackTrace());
-        return problemDetail;
+        return e.toProblemDetail();
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -38,6 +34,11 @@ public class RestExceptionHandler {
         problemDetail.setProperty("timestamp", Instant.now());
         problemDetail.setProperty("stacktrace", e.getStackTrace());
         return problemDetail;
+    }
+
+    @ExceptionHandler(UrlAlreadyExistsException.class)
+    public ProblemDetail handleUrlAlreadyExistsException(UrlAlreadyExistsException e) {
+        return e.toProblemDetail();
     }
 
 }
